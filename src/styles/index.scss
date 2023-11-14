@@ -1,0 +1,20 @@
+iframe {
+  display: none;
+}
+
+html { 
+  background-color: #e6b856;
+}
+
+body {
+  min-width: 230px;
+  max-width: 550px;
+  margin: 0 auto;
+  background-color: #f5853f;
+  border-radius: 10px;
+}
+
+@import "./todoapp";
+@import "./todo";
+@import "./filter";
+@import "./message";

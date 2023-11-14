@@ -1,0 +1,39 @@
+<div class="todoapp">
+  <h1 class="todoapp__title">todos</h1>
+
+  <div class="todoapp__content">
+    <header class="todoapp__header">
+      <button class="todoapp__toggle-all active"></button>
+
+      <form (ngSubmit)="handleFormSubmit()" [formGroup]="todoForm">
+        <input type="text" class="todoapp__new-todo" [style.backgroundColor]="title.errors && title.dirty ? '#f88' : ''"
+          placeholder="What needs to be done?" name="title" formControlName="title" />
+      </form>
+    </header>
+
+    <section class="todoapp__main">
+      <app-todo 
+      *ngFor="let todo of visibleTodos$ | async, let i = index; trackBy: trackById" [todo]="todo" 
+       (delete)="deleteTodo(todo)"
+       (rename)="renameTodo(todo, $event)"
+       (toggle)="toggleTodo(todo)">
+      </app-todo>
+    </section>
+
+    <footer class="todoapp__footer">
+      <span class="todo-count">
+        {{ (activeCount$ | async) }} items left
+      </span>
+
+      <app-filter></app-filter>
+
+      <button 
+      class="todoapp__clear-completed"
+      (click)="clearCompleted()"
+      >
+        Clear completed
+      </button>
+    </footer>
+  </div>
+  <app-message></app-message>
+</div>
