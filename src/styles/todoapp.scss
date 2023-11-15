@@ -6,17 +6,18 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 24px;
     font-weight: 300;
-    color: #f0ccc4;
-    background:  rgba(250, 0, 0, 0.15);
+    color: whitesmoke;
+    background: #040674;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
       0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
   }
 
   &__title {
     font-size: 100px;
     font-weight: 100;
     text-align: center;
-    color: #f0ccc4;
+    color: whitesmoke;
     -webkit-text-rendering: optimizeLegibility;
     -moz-text-rendering: optimizeLegibility;
     text-rendering: optimizeLegibility;
@@ -44,7 +45,7 @@
     cursor: pointer;
 
     &.active {
-      color: #737373;
+      color: whitesmoke;
     }
 
     &:before {
@@ -74,7 +75,7 @@
     &::placeholder {
       font-style: italic;
       font-weight: 300;
-      color: #e6b856;
+      color: rgba(245, 245, 245, 0.363);
     }
   }
 
@@ -93,14 +94,13 @@
 
     font-size: 14px;
 
-    color: #e6ab9d;
+    color: rgba(245, 245, 245, 0.363);
     text-align: center;
-    border-top: 1px solid #e6e6e6;
 
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-      0 8px 0 -3px #e6b856,
+      0 8px 0 -3px #e70e02,
       0 9px 1px -3px rgba(0, 0, 0, 0.2),
-      0 16px 0 -6px #e6b856,
+      0 16px 0 -6px #e70e02,
       0 17px 2px -6px rgba(0, 0, 0, 0.2);
   }
 
