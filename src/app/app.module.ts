@@ -11,11 +11,6 @@ import { TodosPageComponent } from './components/todos-page/todos-page.component
 import { FilterComponent } from './components/filter/filter.component';
 
 const routes: Routes = [
-  { path: 'todos', component: TodosPageComponent },
-  {
-    path: 'about',
-    loadChildren: () => import('./about/about.module').then(module => module.AboutModule)
-  },
   { path: 'todos/:status',component: TodosPageComponent },
   { path: '**', redirectTo: '/todos/all', pathMatch: 'full' }
 ];
