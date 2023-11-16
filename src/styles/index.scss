@@ -14,6 +14,10 @@ body {
   border-radius: 10px;
 }
 
+input {
+  background-color: #03045E
+}
+
 @import "./todoapp";
 @import "./todo";
 @import "./filter";

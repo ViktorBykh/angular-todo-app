@@ -11,7 +11,6 @@ export class TodoComponent implements OnChanges{
   @Output() delete = new EventEmitter();
   @Output() toggle = new EventEmitter();
   @Output() rename = new EventEmitter<string>();
-
   @Input() todo!: Todo;
 
   @ViewChild('titleField')

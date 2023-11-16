@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -13,26 +14,31 @@ import { Todo } from 'src/app/types/todo';
   styleUrls: ['./todos-page.component.scss']
 })
 export class TodosPageComponent implements OnInit {
+  dragTodos: Todo[] = [];
   todos$ = this.todoService.todos$;
+
   activeTodos$ = this.todos$.pipe(
     distinctUntilChanged(),
     map(todos => todos.filter(todo => !todo.completed))
   );
+
   completedTodos$ = this.todos$.pipe(
     map(todos => todos.filter(todo => todo.completed))
   );
+
   activeCount$ = this.activeTodos$.pipe(
     map(todos => todos.length)
   );
+
   visibleTodos$ = this.route.params.pipe(
     switchMap(params => {
-      switch(params['status'] as Status) {
+      switch (params['status'] as Status) {
         case 'active':
           return this.activeTodos$;
-        
+
         case 'completed':
           return this.completedTodos$;
-        
+
         default:
           return this.todos$;
       }
@@ -59,12 +65,30 @@ export class TodosPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.todoService.todos$.subscribe(todos => {
+      this.dragTodos = todos;
+    });
+
     this.route.params.subscribe();
 
-    
     this.todoService.loadTodos()
-    .subscribe({
+      .subscribe({
         error: () => this.messageService.showMessage('Unnable to load todos'),
+      });
+  }
+
+  drop(event: CdkDragDrop<Todo[]>) {
+    moveItemInArray(this.dragTodos, event.previousIndex, event.currentIndex);
+    const index: number = event.previousIndex;
+
+    this.deleteTodo(this.dragTodos[index]);
+    this.createTodo(this.dragTodos[index]);
+  }
+
+  createTodo(todo: Todo) {
+    this.todoService.createNewTodo(todo)
+      .subscribe({
+        error: () => this.messageService.showMessage('Unnable to create todo'),
       });
   }
 
@@ -82,30 +106,30 @@ export class TodosPageComponent implements OnInit {
 
   addTodo(newTitile: string) {
     this.todoService.createTodo(newTitile)
-    .subscribe({
-      error: () => this.messageService.showMessage('Unnable to add todo'),
-    });
+      .subscribe({
+        error: () => this.messageService.showMessage('Unnable to add todo'),
+      });
   }
 
   renameTodo(todo: Todo, title: string) {
     this.todoService.updateTodo({ ...todo, title })
-    .subscribe({
-      error: () => this.messageService.showMessage('Unnable to rename todo'),
-    });
+      .subscribe({
+        error: () => this.messageService.showMessage('Unnable to rename todo'),
+      });
   }
 
   toggleTodo(todo: Todo) {
     this.todoService.updateTodo({ ...todo, completed: !todo.completed })
-    .subscribe({
-      error: () => this.messageService.showMessage('Unnable to toggle todo'),
-    });
+      .subscribe({
+        error: () => this.messageService.showMessage('Unnable to toggle todo'),
+      });
   }
 
   deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo)
-    .subscribe({
-      error: () => this.messageService.showMessage('Unnable to delete todo'),
-    });
+      .subscribe({
+        error: () => this.messageService.showMessage('Unnable to delete todo'),
+      });
   }
 
   clearCompleted() {

@@ -12,12 +12,14 @@
     </header>
 
     <section class="todoapp__main">
-      <app-todo 
-      *ngFor="let todo of visibleTodos$ | async, let i = index; trackBy: trackById" [todo]="todo" 
-       (delete)="deleteTodo(todo)"
-       (rename)="renameTodo(todo, $event)"
-       (toggle)="toggleTodo(todo)">
-      </app-todo>
+      <div cdkDropList class="todo__list" (cdkDropListDropped)="drop($event)">
+        <app-todo
+        *ngFor="let todo of visibleTodos$ | async, let i = index; trackBy: trackById" [todo]="todo"
+         (delete)="deleteTodo(todo)"
+         (rename)="renameTodo(todo, $event)"
+         (toggle)="toggleTodo(todo)" class="todo__box" cdkDrag>
+        </app-todo>
+      </div>
     </section>
 
     <footer class="todoapp__footer">

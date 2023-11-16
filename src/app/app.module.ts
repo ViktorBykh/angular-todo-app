@@ -9,7 +9,8 @@ import { MessageComponent } from './components/message/message.component';
 import { RouterModule, Routes } from '@angular/router';
 import { TodosPageComponent } from './components/todos-page/todos-page.component';
 import { FilterComponent } from './components/filter/filter.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
+ 
 const routes: Routes = [
   { path: 'todos/:status',component: TodosPageComponent },
   { path: '**', redirectTo: '/todos/all', pathMatch: 'full' }
@@ -28,7 +29,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
