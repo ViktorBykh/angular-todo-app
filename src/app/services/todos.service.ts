@@ -3,7 +3,7 @@ import {Todo} from '../types/todo';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, tap, withLatestFrom} from 'rxjs';
 
-const USER_ID = '6555';
+const USER_ID = '6554';
 const API_URL = 'https://mate.academy/students-api'
 
 @Injectable({
@@ -33,6 +33,22 @@ export class TodosService {
       title,
       userId: USER_ID,
       completed: false,
+    })
+      .pipe(
+        withLatestFrom(this.todos$$),
+        tap(([createdTodo, todos]) => {
+          this.todos$$.next(
+            [...todos, createdTodo]
+          );
+        }),
+      )
+  }
+
+  createNewTodo(todo: Todo) {
+    return this.http.post<Todo>(`${API_URL}/todos`, {
+      title: todo.title,
+      userId: USER_ID,
+      completed: todo.completed,
     })
       .pipe(
         withLatestFrom(this.todos$$),
